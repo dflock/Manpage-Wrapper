@@ -41,15 +41,13 @@ EOF
 function setup_colors() {
   if [[ -t 2 ]] && [[ -z "${NO_COLOR-}" ]] && [[ "${TERM-}" != "dumb" ]]; then
     # Control sequences for fancy colours
-    readonly red="$(tput setaf 1 2> /dev/null || true)"
-    readonly grn="$(tput setaf 2 2> /dev/null || true)"
-    readonly ylw="$(tput setaf 3 2> /dev/null || true)"
-    readonly wht="$(tput setaf 7 2> /dev/null || true)"
     readonly gry="$(tput setaf 240 2> /dev/null || true)"
     readonly bld="$(tput bold 2> /dev/null || true)"
     readonly off="$(tput sgr0 2> /dev/null || true)"
   else
-    readonly red='' readonly grn='' readonly ylw='' readonly wht='' readonly gry='' readonly bld='' readonly off=''
+    readonly gry=''
+    readonly bld=''
+    readonly off=''
   fi
 }
 
@@ -100,7 +98,7 @@ fi
 tldr "$@"
 readonly rc="$?"
 if [ "$rc" -gt 0 ]; then
-  read -n 1 -p "Show manpage (y/n)?" choice
+  read -r -n 1 -p "Show manpage (y/n)?" choice
   case "$choice" in 
     y|Y ) man "$@";;
   esac
